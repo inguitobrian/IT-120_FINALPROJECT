@@ -121,7 +121,6 @@ def send_message_to_santa(request):
             if content:
                 Message.objects.create(sender=request.user, receiver=receiver, content=content)
                 messages.success(request, 'Your letter to Santa has been sent!')
-                return redirect('user_dashboard')
     except User.DoesNotExist:
         messages.error(request, "Santa (admin) does not exist.")
         return redirect('user_dashboard')
