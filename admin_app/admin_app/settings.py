@@ -16,9 +16,11 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1']  # Only include IP or domain, no ports
 
 # Session settings
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # Use cache for session storage (can also use 'django.contrib.sessions.backends.db')
-SESSION_CACHE_ALIAS = 'default'  # This should match your cache configuration
-SESSION_COOKIE_DOMAIN = "127.0.0.1"  # Set to the domain to share session across subdomains for local development
+SESSION_COOKIE_NAME = 'admin_app_sessionid'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Use the DB for session storage
+SESSION_COOKIE_AGE = 1209600  # 2 weeks (in seconds)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Ensure the session doesn't expire when the browser closes
+SESSION_SAVE_EVERY_REQUEST = True     # Save session to database on every request
 
 # Application definition
 INSTALLED_APPS = [
