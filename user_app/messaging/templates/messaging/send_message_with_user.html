@@ -2,91 +2,251 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send a Message</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Write a Letter to Santa</title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Custom CSS -->
     <style>
-        /* Custom Styles */
-        .container {
-            max-width: 800px; /* Limit the width of the container for better readability */
-        }
+      body {
+        font-family: "Montserrat", sans-serif;
+        background: linear-gradient(to bottom, #4d9f4d, #ffcccb);
+        background-size: cover;
+        background-attachment: fixed;
+        color: #4b2e2e;
+        overflow-x: hidden;
+      }
 
-        h2, h3 {
-            color: #343a40; /* Dark text color for headings */
-            font-weight: bold;
-        }
+      .container {
+        max-width: 1000px;
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
 
-        .list-group-item {
-            border: 1px solid #ddd; /* Light border to separate message items */
-        }
+      .conversation-box {
+        flex: 1;
+        min-width: 300px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        border: 5px solid #c3a87a; /* Gold-like scroll border */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        max-height: 600px;
+        overflow-y: auto;
+        position: relative;
+      }
 
-        .list-group-item strong {
-            color: #007bff; /* Highlight the sender's username in blue */
-        }
+      .conversation-box::before {
+        content: "\1F384"; /* Christmas Tree */
+        font-size: 2rem;
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        border-radius: 50%;
+        padding: 5px;
+      }
 
-        textarea {
-            min-height: 150px; /* Ensure the textarea is large enough for messages */
-        }
+      .letter-box {
+        flex: 2;
+        min-width: 400px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        border: 5px solid #d4af37; /* Gold border */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        position: relative;
+      }
 
-        button {
-            border-radius: 0.25rem; /* Rounded corners for buttons */
-        }
+      h2 {
+        font-family: "Great Vibes", cursive;
+        color: #b22222;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 20px;
+        animation: fadeIn 2s;
+      }
 
-        button:hover {
-            opacity: 0.9; /* Slightly reduce opacity on hover */
-        }
+      h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #228b22;
+        font-weight: bold;
+        text-align: center;
+      }
 
-        a.btn-secondary {
-            text-decoration: none; /* Remove underline from the "Back to Dashboard" link */
-        }
+      .list-group-item {
+        border: 1px solid #c3a87a;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #fffde7;
+      }
 
-        a.btn-secondary:hover {
-            opacity: 0.8; /* Slightly reduce opacity on hover */
+      .list-group-item strong {
+        color: #b22222;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 200px;
+        background-color: #fffde7;
+        border: 1px solid #d4af37;
+        border-radius: 10px;
+        padding: 15px;
+      }
+
+      button {
+        background-color: #d4af37;
+        color: #4b2e2e;
+        font-weight: bold;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 25px;
+        transition: all 0.3s ease-in-out;
+        position: relative;
+      }
+
+      button:hover {
+        background-color: #b22222;
+        color: white;
+        transform: scale(1.1);
+      }
+
+      button::after {
+        content: "\1F381"; /* Wrapped Gift */
+        font-size: 1.2rem;
+        position: absolute;
+        right: -25px;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: bounce 2s infinite;
+      }
+
+      a.btn-secondary {
+        text-decoration: none;
+        border: none;
+        background-color: #4b2e2e;
+        color: white;
+        border-radius: 25px;
+        padding: 10px 20px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      a.btn-secondary:hover {
+        background-color: #b22222;
+        color: white;
+      }
+
+      .decor {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.8;
+      }
+
+      .decor-top-left {
+        top: -30px;
+        left: -30px;
+        background-image: url("{% static 'images/holly.png' %}");
+      }
+
+      .decor-bottom-right {
+        bottom: -30px;
+        right: -30px;
+        background-image: url("{% static 'images/candy-cane.png' %}");
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
         }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Left: Conversation List -->
+      <div class="conversation-box">
+        <h3>Conversation</h3>
+        <ul class="list-group">
+          {% for msg in messages %}
+          <li class="list-group-item">
+            <strong>{{ msg.sender.username }}:</strong> {{ msg.content }} <br />
+            <small class="text-muted">{{ msg.timestamp }}</small>
+          </li>
+          {% empty %}
+          <li class="list-group-item">No letters yet. Start your wish list!</li>
+          {% endfor %}
+        </ul>
+      </div>
 
-<div class="container mt-4">
-  <h2>Send a Message to {{ receiver.username }}</h2>
+      <!-- Right: Letter Writing Form -->
+      <div class="letter-box">
+        <div class="decor decor-top-left"></div>
+        <div class="decor decor-bottom-right"></div>
 
-  <!-- Display Previous Messages -->
-  <h3 class="mt-4">Conversation</h3>
-  <ul class="list-group">
-    {% for msg in messages %}
-      <li class="list-group-item">
-        <strong>{{ msg.sender.username }}:</strong> {{ msg.content }} <br>
-        <small class="text-muted">{{ msg.timestamp }}</small>
-      </li>
-    {% empty %}
-      <li class="list-group-item">No messages yet. Start the conversation!</li>
-    {% endfor %}
-  </ul>
+        <h2>
+          <span class="santa-icon">🎅</span>
+          Write a Message
+          <span class="santa-icon">🎁</span>
+        </h2>
 
-  <!-- Send New Message -->
-  <form method="POST" class="mt-4">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="content">New Message:</label>
-      <textarea class="form-control" id="content" name="content" required></textarea>
+        <form method="POST" class="mt-4">
+          {% csrf_token %}
+          <div class="form-group">
+            <textarea
+              class="form-control"
+              id="content"
+              name="content"
+              placeholder="Write your Message here..."
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">
+            Send Message
+          </button>
+        </form>
+
+        <a href="{% url 'user_dashboard' %}" class="btn btn-secondary mt-3"
+          >Back to Dashboard</a
+        >
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-3">Send Message</button>
-  </form>
 
-  <!-- Button to Return to Dashboard -->
-  <a href="{% url 'user_dashboard' %}" class="btn btn-secondary mt-3">Back to Dashboard</a>
-</div>
-
-<!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-</body>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
 </html>
