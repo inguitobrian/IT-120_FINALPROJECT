@@ -191,12 +191,20 @@
 
       <h2>Send a Letter to Santa</h2>
       <!-- Form to Send Letter to Santa -->
-
-      <div class="mt-4">
-        <a href="{% url 'user_dashboard' %}" class="btn btn-secondary btn-block"
-          >Back to Dashboard</a
-        >
-      </div>
+      <form method="POST" action="{% url 'send_message_to_santa' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="content">Your Letter:</label>
+          <textarea
+            class="form-control"
+            id="content"
+            name="content"
+            placeholder="Dear Santa, I would like to..."
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send to Santa</button>
+      </form>
     </div>
 
     <footer>Spread the joy of Christmas! <a href="#">Learn More</a></footer>
