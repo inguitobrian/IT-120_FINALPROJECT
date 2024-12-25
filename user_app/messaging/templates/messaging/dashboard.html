@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Santa's Message Delivery</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <style>
+      /* General body styles for Christmas theme */
+      body {
+        font-family: "Lucida Handwriting", cursive, sans-serif;
+        background-color: #f1f8f2;
+        color: #2f4f4f;
+        background-image: url("{% static 'christmas-background.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+      .container {
+        max-width: 1100px;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-top: 30px;
+      }
+
+      .header {
+        background-color: #ff6347;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        font-size: 3rem;
+        letter-spacing: 2px;
+        font-family: "Tangerine", cursive;
+      }
+
+      .header p {
+        font-size: 1.2rem;
+        font-style: italic;
+      }
+
+      .dashboard-section {
+        margin-bottom: 30px;
+      }
+
+      .dashboard-section h3 {
+        font-family: "Dancing Script", cursive;
+        color: #d9534f;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .message-box {
+        background-color: #fdf5e6;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .message-box h4 {
+        color: #32cd32;
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+
+      .profile-card {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      .btn-primary {
+        background-color: #ff6347;
+        border: none;
+      }
+
+      .btn-primary:hover {
+        background-color: #e64a3c;
+      }
+
+      .btn-danger {
+        background-color: #d9534f;
+        border: none;
+      }
+
+      .btn-danger:hover {
+        background-color: #c0392b;
+      }
+
+      footer {
+        background-color: #343a40;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        margin-top: 40px;
+      }
+
+      footer a {
+        color: #ff6347;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .list-group-item {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      /* Festive Icon Decorations */
+      .icon {
+        color: #d9534f;
+        font-size: 1.2rem;
+        margin-right: 8px;
+      }
+
+      .christmas-banner {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .christmas-banner img {
+        width: 50px;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <div class="header">
+      <h1>
+        <i class="fas fa-gift"></i> Santa's Message Delivery
+        <i class="fas fa-gift"></i>
+      </h1>
+      <p>Connect with Santa and spread the holiday cheer!</p>
+    </div>
+
+    <!-- Christmas Banner -->
+    <div class="christmas-banner">
+      <img src="{% static 'gift.png' %}" alt="Santa Hat" />
+      <img src="{% static 'santa.png' %}" alt="Christmas Tree" />
+      <img src="{% static 'gift.png' %}" alt="Sleigh" />
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="container">
+      <!-- Dashboard Greeting -->
+      <div class="dashboard-section">
+        <h3>
+          <i class="fas fa-snowflake icon"></i> Welcome, {{ user.username }}!
+        </h3>
+      </div>
+
+      <!-- Message Section -->
+      <div class="dashboard-section message-box">
+        <h4><i class="fas fa-envelope icon"></i> Messages</h4>
+        <p>Start a conversation or send a wish to Santa!</p>
+        <a href="{% url 'send_message' %}" class="btn btn-primary btn-sm mb-3"
+          >Send a Letter to Santa/Friend</a
+        >
+        <ul class="list-group">
+          {% for user in users %}
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <i class="fas fa-user-circle icon"></i> {{ user.username }}
+            <a
+              href="{% url 'send_message_with_user' user.id %}"
+              class="btn btn-outline-primary btn-sm"
+              >Send a Message</a
+            >
+          </li>
+          {% empty %}
+          <li class="list-group-item">
+            <i class="fas fa-sad-tear icon"></i> No users to display. Send a
+            message to Santa first!
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Logout Button -->
+      <a href="{% url 'user_logout' %}" class="btn btn-danger mt-3">
+        <i class="fas fa-sign-out-alt icon"></i> Logout
+      </a>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+      <p>&copy; 2024 Santa's Message Delivery. All Rights Reserved.</p>
+      <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
