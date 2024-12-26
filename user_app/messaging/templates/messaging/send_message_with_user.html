@@ -6,7 +6,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Write a Letter to Santa</title>
-    <!-- Fixed the duplicate title tag -->
 
     <!-- Bootstrap CSS -->
     <link
@@ -14,185 +13,235 @@
       rel="stylesheet"
     />
 
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Custom CSS -->
     <style>
-        /* General body styles with gradient background */
-        body {
-          font-family: "Poppins", Arial, sans-serif;
-          background: linear-gradient(#4d9f4d, #ffcccb);
-          height: 100vh;
-          color: #333; /* Dark gray text */
-          margin: 0;
-          padding: 20px;
-        }
-
-        .container {
-          max-width: 800px; /* Limit the width of the container for better readability */
-          background-color: rgba(255, 255, 255, 0.9); /* Light translucent background */
-          border-radius: 10px;
-          border: 3px solid rgba(229, 35, 35, 0.9); /* Add a solid border with your chosen color */
-          padding: 30px;
-          margin-top: 50px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      body {
+        font-family: "Montserrat", sans-serif;
+        background: linear-gradient(to bottom, #4d9f4d, #ffcccb);
+        background-size: cover;
+        background-attachment: fixed;
+        color: #4b2e2e;
+        overflow-x: hidden;
       }
 
-        h2,
-        h3 {
-          color: #ff6347; /* Red color for headings */
-          font-weight: bold;
-          text-shadow: 2px 2px 4px rgba(74, 74, 74, 0.5); /* Shadow for text */
-          font-family: "Georgia", serif; /* Changed font for headings to Georgia */
-          text-align: center; /* Center align headings */
-        }
+      .container {
+        max-width: 1000px;
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
 
-        /* Cursive font for "New Message" and username (daniellemrtnz) */
-        label[for="content"],
-        .username,
-        .list-group-item strong {
-          font-family: "Brush Script MT", cursive; /* Cursive font */
-          font-size: 2rem; /* Increase the font size */
-          color: green; /* Set color to green */
-        }
+      .conversation-box {
+        flex: 1;
+        min-width: 300px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        border: 5px solid #c3a87a; /* Gold-like scroll border */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        max-height: 600px;
+        overflow-y: auto;
+        position: relative;
+      }
 
-        .list-group-item {
-          border: 1px solid #ddd; /* Light border to separate message items */
-          background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent */
-          margin-bottom: 10px;
-          border-radius: 5px;
-        }
+      .conversation-box::before {
+        content: "\1F384"; /* Christmas Tree */
+        font-size: 2rem;
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        border-radius: 50%;
+        padding: 5px;
+      }
 
-        textarea {
-          min-height: 150px; /* Ensure the textarea is large enough for messages */
-          background-color: #fff; /* White background for better readability */
-          border-radius: 5px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+      .letter-box {
+        flex: 2;
+        min-width: 400px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        border: 5px solid #d4af37; /* Gold border */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        position: relative;
+      }
 
-        button {
-          background-color:: #e64a3c; /* Green color for "Back to Dashboard" button */
-          text-decoration: none;
-          color: white;
-          padding: 10px 20px;
-          border-radius: 5px;
-        }
+      h2 {
+        font-family: "Great Vibes", cursive;
+        color: #b22222;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 20px;
+        animation: fadeIn 2s;
+      }
 
-        button:hover {
-          background-color: #e64a3c; /* Darker red on hover */
-          opacity: 0.9;
-        }
+      h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #228b22;
+        font-weight: bold;
+        text-align: center;
+      }
 
-        a.btn-secondary {
-          background-color: #28a745; /* Green color for "Back to Dashboard" button */
-          text-decoration: none;
-          color: white;
-          padding: 10px 20px;
-          border-radius: 5px;
-        }
+      .list-group-item {
+        border: 1px solid #c3a87a;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #fffde7;
+      }
 
-        a.btn-secondary:hover {
-          background-color: #218838; /* Darker green on hover */
-          opacity: 0.8;
-        }
+      .list-group-item strong {
+        color: #b22222;
+      }
 
-        /* Snowflakes animation */
-        @keyframes snow {
-          0% {
-            transform: translateY(-100px);
-          }
-          100% {
-            transform: translateY(100vh);
-          }
-        }
+      textarea {
+        width: 100%;
+        min-height: 200px;
+        background-color: #fffde7;
+        border: 1px solid #d4af37;
+        border-radius: 10px;
+        padding: 15px;
+      }
 
-        .snowflake {
-          position: absolute;
-          font-size: 2rem;
-          color: white;
-          opacity: 0.7;
-          animation: snow linear infinite;
-        }
+      button {
+        background-color: #d4af37;
+        color: #4b2e2e;
+        font-weight: bold;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 25px;
+        transition: all 0.3s ease-in-out;
+        position: relative;
+      }
 
-        .snowflake:nth-child(odd) {
-          animation-duration: 15s;
-          left: 10%;
-        }
+      button:hover {
+        background-color: #b22222;
+        color: white;
+        transform: scale(1.1);
+      }
 
-        .snowflake:nth-child(even) {
-          animation-duration: 20s;
-          left: 30%;
-        }
+      button::after {
+        content: "\1F381"; /* Wrapped Gift */
+        font-size: 1.2rem;
+        position: absolute;
+        right: -25px;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: bounce 2s infinite;
+      }
 
-        .snowflake:nth-child(3n) {
-          animation-duration: 25s;
-          left: 50%;
-        }
+      a.btn-secondary {
+        text-decoration: none;
+        border: none;
+        background-color: #4b2e2e;
+        color: white;
+        border-radius: 25px;
+        padding: 10px 20px;
+        transition: all 0.3s ease-in-out;
+      }
 
-        .snowflake:nth-child(4n) {
-          animation-duration: 30s;
-          left: 70%;
-        }
+      a.btn-secondary:hover {
+        background-color: #b22222;
+        color: white;
+      }
 
-        .snowflake:nth-child(5n) {
-          animation-duration: 35s;
-          left: 90%;
-        }
+      .decor {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.8;
+      }
 
-        /* Google Fonts */
-        <link
-          href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
+      .decor-top-left {
+        top: -30px;
+        left: -30px;
+        background-image: url("{% static 'images/holly.png' %}");
+      }
+
+      .decor-bottom-right {
+        bottom: -30px;
+        right: -30px;
+        background-image: url("{% static 'images/candy-cane.png' %}");
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
     </style>
-    <!-- Fixed the closing of style tag -->
   </head>
   <body>
-    <!-- Snowflakes for Christmas effect -->
-    <div class="snowflake" style="left: 10%; animation-delay: 0s">❄️</div>
-    <div class="snowflake" style="left: 20%; animation-delay: 2s">❄️</div>
-    <div class="snowflake" style="left: 30%; animation-delay: 4s">❄️</div>
-    <div class="snowflake" style="left: 40%; animation-delay: 6s">❄️</div>
-    <div class="snowflake" style="left: 50%; animation-delay: 8s">❄️</div>
-    <div class="snowflake" style="left: 60%; animation-delay: 10s">❄️</div>
-    <div class="snowflake" style="left: 70%; animation-delay: 12s">❄️</div>
-    <div class="snowflake" style="left: 80%; animation-delay: 14s">❄️</div>
+    <div class="container">
+      <!-- Left: Conversation List -->
+      <div class="conversation-box">
+        <h3>Conversation</h3>
+        <ul class="list-group">
+          {% for msg in messages %}
+          <li class="list-group-item">
+            <strong>{{ msg.sender.username }}:</strong> {{ msg.content }} <br />
+            <small class="text-muted">{{ msg.timestamp }}</small>
+          </li>
+          {% empty %}
+          <li class="list-group-item">No letters yet. Start your wish list!</li>
+          {% endfor %}
+        </ul>
+      </div>
 
-    <div class="container mt-4">
-      <h2>Send a Message to <span class="username">admindan</span></h2>
+      <!-- Right: Letter Writing Form -->
+      <div class="letter-box">
+        <div class="decor decor-top-left"></div>
+        <div class="decor decor-bottom-right"></div>
 
-      <!-- Display Previous Messages -->
-      <h3 class="mt-4">Conversation</h3>
-      <ul class="list-group">
-        {% for msg in messages %}
-        <li class="list-group-item">
-          <strong>{{ msg.sender.username }}:</strong> {{ msg.content }} <br />
-          <small class="text-muted">{{ msg.timestamp }}</small>
-        </li>
-        {% empty %}
-        <li class="list-group-item">
-          No messages yet. Start the conversation!
-        </li>
-        {% endfor %}
-      </ul>
+        <h2>
+          <span class="santa-icon">🎅</span>
+          Write a Message
+          <span class="santa-icon">🎁</span>
+        </h2>
 
-      <!-- Send New Message -->
-      <form method="POST" class="mt-4">
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="content">New Message:</label>
-          <textarea
-            class="form-control"
-            id="content"
-            name="content"
-            required
-          ></textarea>
-        </div>
-        <button type="submit" class="btn mt-3">Send Message</button>
-      </form>
+        <form method="POST" class="mt-4">
+          {% csrf_token %}
+          <div class="form-group">
+            <textarea
+              class="form-control"
+              id="content"
+              name="content"
+              placeholder="Write your Message here..."
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">
+            Send Message
+          </button>
+        </form>
 
-      <!-- Button to Return to Dashboard -->
-      <a href="{% url 'user_dashboard' %}" class="btn btn-secondary mt-3"
-        >Back to Dashboard</a
-      >
+        <a href="{% url 'user_dashboard' %}" class="btn btn-secondary mt-3"
+          >Back to Dashboard</a
+        >
+      </div>
     </div>
 
     <!-- Bootstrap JS and dependencies -->

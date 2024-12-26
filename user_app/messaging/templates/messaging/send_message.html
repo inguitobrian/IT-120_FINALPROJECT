@@ -13,34 +13,14 @@
       rel="stylesheet"
     />
 
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-
     <!-- Custom CSS -->
     <style>
       body {
-        background: linear-gradient(120deg, #4d9f4d, #ffcccb);
+        background: linear-gradient(to bottom, #4d9f4d, #ffcccb);
         color: #343a40;
-        font-family: "Poppins", sans-serif;
+        font-family: "Arial", sans-serif;
         margin: 0;
         padding: 0;
-        animation: backgroundShift 10s linear infinite;
-        overflow: hidden; /* Hide snowflakes that fall outside the viewport */
-      }
-
-      @keyframes backgroundShift {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
       }
 
       .container {
@@ -52,111 +32,67 @@
         border-radius: 15px;
         position: relative;
         overflow: hidden;
-        animation: fadeIn 1.5s ease-in-out;
-        z-index: 2; /* Ensure content is above snowflakes */
       }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      .container:before {
+        content: "";
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 150px;
+        height: 150px;
+        background: url("{% static 'santa-hat.png' %}") no-repeat center center;
+        background-size: contain;
+        opacity: 0.8;
+        z-index: -1;
       }
 
       h2 {
         color: #d62828;
-        font-family: "Georgia", serif;
-        font-size: 2rem;
-        font-weight: bolder;
+        font-weight: bold;
         text-align: center;
         margin-bottom: 20px;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
-      }
-
-      .animated-heading {
-        font-family: "Poppins", sans-serif;
-        font-size: 1.5rem;
-        color: lightgreen;
-        text-align: center;
-        animation: colorChange 3s infinite;
-      }
-
-      @keyframes colorChange {
-        0% {
-          color: rgb(15, 133, 47);
-        }
-        50% {
-          color: rgb(233, 236, 35);
-        }
-        100% {
-          color: rgb(15, 133, 47);
-        }
       }
 
       .form-group label {
-        font-weight: 600;
+        font-weight: bold;
         color: #4d4d4d;
+      }
+
+      .btn-primary {
+        width: 100%;
+        padding: 10px;
+        background-color: #d62828;
+        border: none;
+        font-size: 1rem;
+        color: #fff;
+        border-radius: 10px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: #c41d1d;
+        transform: scale(1.02);
+      }
+
+      .alert {
+        margin-top: 20px;
+        font-size: 0.95rem;
+      }
+
+      textarea {
+        min-height: 150px;
+        border-radius: 8px;
       }
 
       .form-control {
         border-radius: 8px;
-        border: 2px solid #ddd;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .form-control:focus {
-        border-color: #d62828;
-        box-shadow: 0 0 10px rgba(214, 40, 40, 0.5);
-      }
-
-      .btn-small {
-        width: auto;
-        padding: 5px 20px;
-        background-color: #d62828;
-        border: none;
-        font-size: 0.9rem;
-        color: #fff;
-        border-radius: 10px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        display: block;
-        margin: 0 auto;
-      }
-
-      .btn-small:hover {
-        background-color: #c41d1d;
-        transform: scale(1.05);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       .form-divider {
         margin: 40px 0;
         border-top: 2px solid #dcdcdc;
-        text-align: center;
-        position: relative;
-      }
-
-      .form-divider:before {
-        content: url("{% static 'santa-hat.png' %}");
-        position: absolute;
-        top: -50px;
-        left: 50%;
-        transform: translateX(-50%);
-        animation: bounce 2s infinite;
-      }
-
-      @keyframes bounce {
-        0%,
-        100% {
-          transform: translate(-50%, 0);
-        }
-        50% {
-          transform: translate(-50%, -10px);
-        }
       }
 
       footer {
@@ -169,46 +105,48 @@
       footer a {
         color: #d62828;
         text-decoration: none;
-        transition: color 0.3s ease;
       }
 
       footer a:hover {
-        color: rgb(221, 75, 75);
         text-decoration: underline;
       }
 
-      /* Snowflakes Animation */
       .snowflake {
         position: absolute;
-        top: -10px;
-        color: white;
-        font-size: 1rem;
-        user-select: none;
-        pointer-events: none;
-        z-index: 1;
-        animation: fall 10s linear infinite, sway 3s ease-in-out infinite;
+        top: -10%;
+        left: 50%;
+        font-size: 1.5em;
+        color: #fff;
+        z-index: 999;
+        animation: snowfall 10s linear infinite;
+        animation-delay: calc(-10s * var(--i));
       }
 
-      @keyframes fall {
-        to {
-          transform: translateY(100vh);
-        }
+      .snowflake:nth-child(odd) {
+        animation-duration: 12s;
       }
 
-      @keyframes sway {
+      @keyframes snowfall {
         0% {
-          transform: translateX(0);
-        }
-        50% {
-          transform: translateX(30px);
+          top: -10%;
+          opacity: 1;
         }
         100% {
-          transform: translateX(0);
+          top: 110%;
+          opacity: 0;
         }
       }
     </style>
   </head>
   <body>
+    <!-- Snowflakes -->
+    <div class="snowflake" style="--i: 1">❄️</div>
+    <div class="snowflake" style="--i: 2">❄️</div>
+    <div class="snowflake" style="--i: 3">❄️</div>
+    <div class="snowflake" style="--i: 4">❄️</div>
+    <div class="snowflake" style="--i: 5">❄️</div>
+    <div class="snowflake" style="--i: 6">❄️</div>
+
     <div class="container">
       <h2>Send a Message to a Friend</h2>
 
@@ -219,7 +157,17 @@
 
       <!-- Success Message (if any) -->
       {% if messages %} {% for message in messages %}
-      <div class="alert alert-success">{{ message }}</div>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       {% endfor %} {% endif %}
 
       <!-- Form to Send Message to Any User -->
@@ -246,13 +194,27 @@
             required
           ></textarea>
         </div>
-        <button type="submit" class="btn-small">Send Message</button>
+        <button type="submit" class="btn btn-primary">Send Message</button>
       </form>
 
       <div class="form-divider"></div>
 
-      <h2 class="animated-heading">Send a Letter to Santa</h2>
-
+      <h2>Send a Letter to Santa</h2>
+      <!-- Form to Send Letter to Santa -->
+      <form method="POST" action="{% url 'send_message_to_santa' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="content">Your Letter:</label>
+          <textarea
+            class="form-control"
+            id="content"
+            name="content"
+            placeholder="Dear Santa, I would like to..."
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send to Santa</button>
+      </form>
       <div class="mt-4">
         <a href="{% url 'user_dashboard' %}" class="btn btn-secondary btn-block"
           >Back to Dashboard</a
@@ -267,24 +229,15 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <!-- JavaScript for Snowflakes -->
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const snowflakesCount = 30; // Reduce the number of snowflakes
-        const body = document.querySelector("body");
-
-        for (let i = 0; i < snowflakesCount; i++) {
-          const snowflake = document.createElement("div");
-          snowflake.classList.add("snowflake");
-          snowflake.innerText = "❄"; // Snowflake character
-          snowflake.style.left = `${Math.random() * 100}vw`; // Random X position
-          snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`; // Random speed
-          snowflake.style.fontSize = `${Math.random() * 10 + 10}px`; // Random size
-          snowflake.style.opacity = Math.random(); // Random opacity
-
-          body.appendChild(snowflake);
-        }
-      });
+      // Auto-hide success messages after 5 seconds
+      setTimeout(() => {
+        const alerts = document.querySelectorAll(".alert");
+        alerts.forEach((alert) => {
+          alert.classList.add("fade-out");
+          setTimeout(() => alert.remove(), 1000);
+        });
+      }, 5000);
     </script>
   </body>
 </html>

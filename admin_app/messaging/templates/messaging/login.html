@@ -6,10 +6,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="{% static 'Image.png' %}" type="image/png" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
-      rel="stylesheet"
-    />
     <title>Santa's Workshop</title>
     <style>
       /* General body styling */
@@ -18,7 +14,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        font-family: "Poppins", sans-serif;
+        font-family: "Arial", sans-serif;
         background: linear-gradient(to bottom, #4d9f4d, #ffcccb);
         overflow: hidden;
       }
@@ -26,11 +22,11 @@
       /* Snowflakes falling animation */
       @keyframes snowfall {
         0% {
-          transform: translateX(0) translateY(0);
+          top: -10%;
           opacity: 1;
         }
         100% {
-          transform: translateX(calc(var(--dx) * 100vw)) translateY(110vh);
+          top: 110%;
           opacity: 0;
         }
       }
@@ -38,12 +34,16 @@
       .snowflake {
         position: absolute;
         top: -10%;
-        left: calc(var(--x) * 100%);
-        font-size: calc(1em + var(--size) * 1.5em);
+        left: 50%;
+        font-size: 1.5em;
         color: #fff;
-        opacity: var(--opacity);
-        animation: snowfall calc(5s + var(--duration) * 10s) linear infinite;
-        transform: translateX(0) translateY(0);
+        z-index: 999;
+        animation: snowfall 10s linear infinite;
+        animation-delay: calc(-10s * var(--i));
+      }
+
+      .snowflake:nth-child(odd) {
+        animation-duration: 12s;
       }
 
       /* Flex container for form and images */
@@ -53,7 +53,6 @@
         align-items: center;
         height: 100vh;
         position: relative;
-        z-index: 1;
       }
 
       .image-container {
@@ -69,12 +68,12 @@
       .login-box {
         width: 400px;
         padding: 50px;
-        background: rgba(252, 245, 244, 0.57);
+        background: #ffcccb;
         box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
-        border-radius: 30px;
+        border-radius: 15px;
         text-align: center;
+        overflow: hidden;
         position: relative;
-        z-index: 1;
       }
 
       /* Giftbox appearance */
@@ -82,8 +81,7 @@
       .login-box:after {
         content: "";
         position: absolute;
-        background: rgb(23, 100, 23);
-        border-radius: 5px;
+        background: #d62828;
         z-index: 0;
       }
 
@@ -110,7 +108,7 @@
         left: 50%;
         width: 80px;
         height: 80px;
-        background: rgb(221, 49, 34);
+        background: #d62828;
         transform: translateX(-50%);
         clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
         z-index: 1;
@@ -130,24 +128,32 @@
         }
       }
 
-      /* Title with animation */
-      .support-title {
-        font-family: "Montserrat", sans-serif; /* Clean, modern font */
-        font-weight: bolder; /* Make it bold */
-        font-size: 2.5rem;
-        color: #fff;
-        margin-bottom: 30px;
-        text-transform: uppercase;
-        animation: color-change 1s infinite alternate;
+      .gift-bow::before,
+      .gift-bow::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #d62828;
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
       }
 
-      @keyframes color-change {
-        0% {
-          color: rgb(208, 169, 40);
-        }
-        100% {
-          color: rgb(53, 144, 53);
-        }
+      .gift-bow::before {
+        transform: rotate(45deg);
+      }
+
+      .gift-bow::after {
+        transform: rotate(-45deg);
+      }
+
+      /* Title */
+      .support-title {
+        font-size: 2.5em;
+        color: #d62828;
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        z-index: 1;
       }
 
       /* Form fields */
@@ -160,7 +166,7 @@
         width: 100%;
         padding: 10px 0;
         font-size: 16px;
-        color: rgb(189, 45, 32);
+        color: #333;
         margin-bottom: 30px;
         border: none;
         border-bottom: 1px solid #333;
@@ -184,7 +190,7 @@
       .user-box input:valid ~ label {
         top: -20px;
         left: 0;
-        color: rgb(36, 122, 36);
+        color: #d62828;
         font-size: 12px;
       }
 
@@ -194,9 +200,8 @@
         display: inline-block;
         padding: 12px 30px;
         font-size: 16px;
-        font-weight: bold; /* Text made bold */
         color: #fff;
-        background: rgba(186, 167, 167, 0.47);
+        background: #d62828;
         border: none;
         border-radius: 8px;
         cursor: pointer;
@@ -206,28 +211,48 @@
       }
 
       .login-button:hover {
-        background: lightcoral; /* Light red hover effect */
+        background: #fff;
+        color: #d62828;
+      }
+
+      /* Santa Login Button */
+      .santa-button {
+        margin-top: 20px;
+        padding: 12px 30px;
+        font-size: 16px;
         color: #fff;
+        background: #2d2d2d;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        transition: 0.3s;
+      }
+
+      .santa-button:hover {
+        background: #fff;
+        color: #2d2d2d;
+      }
+
+      /* Error message styling */
+      .error-message {
+        color: #d62828;
+        font-weight: bold;
+        margin-top: 20px;
+        font-size: 14px;
       }
     </style>
   </head>
 
   <body>
     <!-- Snowflakes -->
-    <script>
-      const totalSnowflakes = 100;
-      for (let i = 0; i < totalSnowflakes; i++) {
-        const snowflake = document.createElement("div");
-        snowflake.className = "snowflake";
-        snowflake.style.setProperty("--x", Math.random());
-        snowflake.style.setProperty("--size", Math.random());
-        snowflake.style.setProperty("--duration", Math.random());
-        snowflake.style.setProperty("--dx", Math.random() - 0.5);
-        snowflake.style.setProperty("--opacity", Math.random());
-        snowflake.textContent = "❄️";
-        document.body.appendChild(snowflake);
-      }
-    </script>
+    <div class="snowflake" style="--i: 1">❄️</div>
+    <div class="snowflake" style="--i: 2">❄️</div>
+    <div class="snowflake" style="--i: 3">❄️</div>
+    <div class="snowflake" style="--i: 4">❄️</div>
+    <div class="snowflake" style="--i: 5">❄️</div>
+    <div class="snowflake" style="--i: 6">❄️</div>
 
     <!-- Container for form and images -->
     <div class="container">
@@ -239,6 +264,7 @@
       <div class="login-box">
         <div class="gift-bow"></div>
         <div class="support-title">Santa's Letter Delivery</div>
+        <h2>Log in as Santa</h2>
         <form method="POST">
           {% csrf_token %}
           <div class="user-box">
@@ -251,6 +277,15 @@
           </div>
           <button type="submit" class="login-button">Login</button>
         </form>
+
+        <!-- Display Error Messages -->
+        {% if messages %}
+        <div class="error-message">
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
       </div>
 
       <div class="image-container">
