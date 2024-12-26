@@ -35,14 +35,25 @@
       }
 
       .navbar-brand {
-        font-size: 1.8rem;
-        font-weight: bold;
+        font-family: "Montserrat", sans-serif; /* Clean, modern font */
+        font-weight: bold; /* Make it bold */
+        font-size: 1.7rem; /* Keep the font size slightly large */
+        color: #fff; /* Ensure it contrasts well against the red background */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add a subtle shadow for depth */
       }
 
       .navbar-nav .nav-link {
         color: white;
         font-size: 1.1rem;
+        transition: color 0.3s, transform 0.3s;
       }
+
+      .navbar-nav .nav-link:hover {
+        color: #f7a700; /* Gold color for hover effect */
+        transform: scale(1.1); /* Slightly enlarge the text */
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+      }
+
       .header {
         text-align: center;
         padding: 80px 20px;
@@ -77,8 +88,21 @@
       .header p {
         position: relative;
         z-index: 2;
-        color: #fce8d8;
+        color: #f7a700;
         font-size: 1.4rem;
+      }
+
+      .btn-danger {
+        background-color: rgb(172, 15, 15);
+        border: none;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      .btn-danger:hover {
+        background-color: rgb(186, 62, 62); /* Darker red for hover effect */
+        transform: scale(1.1); /* Slightly enlarge the button */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add a shadow effect */
+        color: white; /* Ensure the text remains white */
       }
 
       @keyframes fadeIn {

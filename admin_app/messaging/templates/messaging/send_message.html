@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,14 +30,18 @@
       }
 
       .navbar-brand {
-        font-size: 1.8rem;
-        font-weight: bold;
+        font-family: "Montserrat", sans-serif; /* Clean, modern font */
+        font-weight: bold; /* Make it bold */
+        font-size: 1.7rem; /* Keep the font size slightly large */
+        color: #fff; /* Ensure it contrasts well against the red background */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add a subtle shadow for depth */
       }
 
       .navbar-nav .nav-link {
         color: white;
         font-size: 1.1rem;
       }
+
       /* Main Content */
       .content {
         width: 90%;
@@ -53,24 +56,32 @@
       h2 {
         color: #d32f2f;
         margin-bottom: 20px;
-        font-size: 2.5rem;
+        font-size: 1rem;
+        font-weight: bolder;
         text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        font-family: "Georgia", serif; /* Updated font */
+        text-align: center; /* Center the heading */
+      }
+
+      h2 .christmas-icon {
+        font-size: 2.5rem;
+        margin: 0 10px;
       }
 
       /* Christmas Decorative */
       .christmas-icon {
         font-size: 2rem;
         color: #ff6347; /* Tomato red */
-        margin: 0 10px;
       }
 
       .chat-container {
-        height: 200px;
+        height: 80px; /* Smaller size */
         overflow-y: auto;
         background-color: #3a3a3a;
         padding: 15px;
         border-radius: 10px;
         border: 1px solid #555;
+        margin-bottom: 20px;
       }
 
       /* Form Styles */
@@ -85,25 +96,39 @@
       }
 
       .btn-warning {
-        background-color: #ffcc00;
+        background-color: rgb(237, 199, 47);
         color: #fff;
         border: none;
         border-radius: 5px;
+        transition: background-color 0.3s;
       }
 
       .btn-warning:hover {
-        background-color: #ff9900;
+        background-color: #e6b800; /* Darker yellow */
       }
 
       .btn-secondary {
-        background-color: #4d4d4d;
-        color: #f5f5f5;
+        background-color: rgba(132, 127, 127, 0.74);
+        color: rgba(136, 131, 131, 0.82);
         border: none;
         border-radius: 5px;
+        transition: background-color 0.3s;
       }
 
       .btn-secondary:hover {
-        background-color: #333;
+        background-color: #333; /* Darker gray */
+      }
+
+      .btn-back-dashboard {
+        background-color: rgb(109, 235, 109);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      .btn-back-dashboard:hover {
+        background-color: rgb(123, 179, 123); /* Darker green */
       }
 
       .alert {
@@ -152,6 +177,11 @@
     <div class="snowflake" style="left: 30%; animation-delay: 4s">❄️</div>
     <div class="snowflake" style="left: 40%; animation-delay: 6s">❄️</div>
     <div class="snowflake" style="left: 50%; animation-delay: 8s">❄️</div>
+    <div class="snowflake" style="left: 60%; animation-delay: 10s">❄️</div>
+    <div class="snowflake" style="left: 70%; animation-delay: 12s">❄️</div>
+    <div class="snowflake" style="left: 80%; animation-delay: 14s">❄️</div>
+    <div class="snowflake" style="left: 90%; animation-delay: 16s">❄️</div>
+    <div class="snowflake" style="left: 5%; animation-delay: 18s">❄️</div>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -189,7 +219,10 @@
     <!-- Main Content -->
     <div class="content">
       <!-- Send Response Title -->
-      <h2>🎄 Send Your Christmas Message 🎄</h2>
+      <h2>
+        <span class="christmas-icon">🎄</span> Send Your Christmas Message
+        <span class="christmas-icon">🎄</span>
+      </h2>
 
       <!-- Error Message -->
       {% if error %}
@@ -224,19 +257,15 @@
               class="form-control"
               name="content"
               id="content"
-              rows="3"
+              rows="5"
               placeholder="Type your holiday message..."
               required
             ></textarea>
           </div>
           <div class="col-md-12 d-flex justify-content-end gap-2">
-            <a
-              href="{% url 'admin_dashboard' %}"
-              class="btn"
-              style="background-color: #90ee90; color: white"
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-back-dashboard"
               >Back to Dashboard</a
             >
-
             <button type="submit" class="btn btn-warning">Send 🎅</button>
             <a href="#" class="btn btn-secondary">Cancel</a>
           </div>
