@@ -115,3 +115,7 @@
 8. Develop an admin dashboard for user management.
 9. Implement APIs for message history with decryption.
 10. Perform extensive testing to ensure the application is secure and functional.
+
+![Screenshot 2024-12-26 121020](https://github.com/user-attachments/assets/24de18a7-8447-4a9c-9010-9c8a06f70931)
+![Screenshot 2024-12-26 121003](https://github.com/user-attachments/assets/4029a21f-c99b-42f1-a318-649fe7afc046)
+
