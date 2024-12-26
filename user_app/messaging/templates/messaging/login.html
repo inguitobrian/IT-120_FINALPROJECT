@@ -33,16 +33,12 @@
       .snowflake {
         position: absolute;
         top: -10%;
-        left: 50%;
-        font-size: 1.5em;
+        left: calc(var(--x) * 100%);
+        font-size: calc(1rem + var(--size) * 1.5rem);
         color: white;
         z-index: 999;
-        animation: snowfall 10s linear infinite;
-        animation-delay: calc(-10s * var(--i));
-      }
-
-      .snowflake:nth-child(odd) {
-        animation-duration: 12s;
+        animation: snowfall calc(5s + var(--duration) * 5s) linear infinite;
+        opacity: calc(0.5 + var(--opacity));
       }
 
       .login-box {
@@ -60,35 +56,9 @@
         background-image: linear-gradient(white, #ffe6e6);
       }
 
-      .giftbox-ribbon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 50px;
-        height: 350px;
-        transform: translate(-50%, -50%) rotate(45deg);
-        background: #d62828;
-        z-index: -1;
-      }
-
-      .giftbox-ribbon:before,
-      .giftbox-ribbon:after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 20px;
-        background: #d62828;
-      }
-
-      .giftbox-ribbon:before {
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-      }
-
       .support-title {
-        font-family: "Montserrat", sans-serif; /* Clean, modern font */
-        font-weight: bolder; /* Make it bold */
+        font-family: "Montserrat", sans-serif;
+        font-weight: bolder;
         font-size: 2rem;
         color: #008000;
         text-transform: uppercase;
@@ -170,12 +140,19 @@
 
   <body>
     <!-- Snowflakes -->
-    <div class="snowflake" style="--i: 1">❄️</div>
-    <div class="snowflake" style="--i: 2">❄️</div>
-    <div class="snowflake" style="--i: 3">❄️</div>
-    <div class="snowflake" style="--i: 4">❄️</div>
-    <div class="snowflake" style="--i: 5">❄️</div>
-    <div class="snowflake" style="--i: 6">❄️</div>
+    <script>
+      const totalSnowflakes = 100; // Increase the number of snowflakes
+      for (let i = 0; i < totalSnowflakes; i++) {
+        const snowflake = document.createElement("div");
+        snowflake.className = "snowflake";
+        snowflake.style.setProperty("--x", Math.random()); // Random horizontal position
+        snowflake.style.setProperty("--size", Math.random()); // Random size
+        snowflake.style.setProperty("--duration", Math.random()); // Random duration
+        snowflake.style.setProperty("--opacity", Math.random()); // Random opacity
+        snowflake.textContent = "❄️";
+        document.body.appendChild(snowflake);
+      }
+    </script>
 
     <div class="login-box">
       <div class="support-title">Santa's Letter Delivery</div>

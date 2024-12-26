@@ -114,6 +114,20 @@
         transform: translateX(-50%);
         clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
         z-index: 1;
+        animation: turn-bow 3s linear infinite;
+      }
+
+      /* Keyframes for turning bow */
+      @keyframes turn-bow {
+        0% {
+          transform: translateX(-50%) rotate(0deg);
+        }
+        50% {
+          transform: translateX(-50%) rotate(180deg);
+        }
+        100% {
+          transform: translateX(-50%) rotate(360deg);
+        }
       }
 
       /* Title with animation */
