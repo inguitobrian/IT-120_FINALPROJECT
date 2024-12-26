@@ -220,6 +220,14 @@
         background: #fff;
         color: #2d2d2d;
       }
+
+      /* Error message styling */
+      .error-message {
+        color: #d62828;
+        font-weight: bold;
+        margin-top: 20px;
+        font-size: 14px;
+      }
     </style>
   </head>
 
@@ -256,7 +264,14 @@
           <button type="submit" class="login-button">Login</button>
         </form>
 
-        <!-- Login as Santa Button -->
+        <!-- Display Error Messages -->
+        {% if messages %}
+        <div class="error-message">
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
       </div>
 
       <div class="image-container">

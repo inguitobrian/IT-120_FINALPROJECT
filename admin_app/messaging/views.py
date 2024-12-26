@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 from .forms import CustomUserCreationForm, MessageForm
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -38,10 +39,14 @@ def delete_user(request, user_id):
 # Admin Dashboard View
 @login_required
 def admin_dashboard(request):
+    if not request.user.is_staff:  # Restrict non-admin users
+        messages.error(request, "Access denied. Admin privileges are required.")
+        return redirect('admin_login')
+    
     users = User.objects.all()
     messages = Message.objects.all()
 
-    # Decrypt the message content if needed (based on your existing logic)
+    # Decrypt the message content if needed
     for message in messages:
         message.content = message.get_decrypted_content()
 
@@ -52,14 +57,27 @@ def admin_dashboard(request):
 
 # Admin Login View
 def admin_login(request):
+    if request.user.is_authenticated:  # Redirect if already logged in
+        if request.user.is_staff:  # Ensure only admin users can access
+            return redirect('admin_dashboard')
+        else:
+            logout(request)  # Force logout for non-admin users
+            messages.error(request, "Invalid username or password.")
+            return redirect('admin_login')
+    
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            login(request, user)
-            return redirect('home')
+            if user.is_staff:  # Allow only admin users to log in
+                login(request, user)
+                messages.success(request, "Logged in successfully.")
+                return redirect('admin_dashboard')
+        else:
+            messages.error(request, "Invalid username or password.")
     else:
         form = AuthenticationForm()
+    
     return render(request, 'messaging/login.html', {'form': form})
 
 # Admin Logout View
