@@ -19,18 +19,6 @@ User = get_user_model()  # Use the custom user model
 def home(request):
     return render(request, 'messaging/home.html')
 
-# Edit Profile View
-@login_required
-def edit_profile(request):
-    if request.method == 'POST':
-        form = UserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('user_dashboard')  # Redirect to the user dashboard after update
-    else:
-        form = UserChangeForm(instance=request.user)
-    return render(request, 'user_dashboard.html', {'form': form})
-
 # User Registration View
 def user_register(request):
     if request.method == 'POST':
@@ -121,11 +109,13 @@ def send_message_to_santa(request):
             if content:
                 Message.objects.create(sender=request.user, receiver=receiver, content=content)
                 messages.success(request, 'Your letter to Santa has been sent!')
+                return redirect('send_message_to_santa')  # Redirect to prevent duplicate submissions
     except User.DoesNotExist:
         messages.error(request, "Santa (admin) does not exist.")
         return redirect('user_dashboard')
 
-    return render(request, 'messaging/send_message.html', {'error': 'Unable to send message to Santa.'})
+    return render(request, 'messaging/send_message.html')
+
 
 # Secure API Endpoint for Sending Messages
 class SendMessageView(APIView):
