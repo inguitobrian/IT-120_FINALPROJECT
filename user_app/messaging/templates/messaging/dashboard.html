@@ -49,25 +49,28 @@
       }
 
       .header h1 {
-        font-size: 3rem;
+        font-size: 3.5rem;
         letter-spacing: 2px;
-        font-family: "Tangerine", cursive;
+        font-family: "Georgia", serif; /* Changed to Georgia font */
+        color: rgb(60, 157, 22);
       }
 
       .header p {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
+        font-family: "Arial", sans-serif; /* Changed to Arial font */
         font-style: italic;
+        color: rgb(254, 201, 26);
       }
 
       .dashboard-section {
         margin-bottom: 30px;
       }
 
-      .dashboard-section h3 {
-        font-family: "Dancing Script", cursive;
-        color: #d9534f;
-        font-weight: bold;
-        margin-bottom: 20px;
+      /* Cursive font style for specific elements */
+      .dashboard-section h3,
+      .message-box h4,
+      .list-group-item p {
+        font-family: "Lucida Handwriting", cursive, sans-serif;
       }
 
       .message-box {
@@ -80,7 +83,7 @@
       .message-box h4 {
         color: #32cd32;
         font-weight: bold;
-        font-size: 1.5rem;
+        font-size: 1.7rem;
       }
 
       .profile-card {
@@ -94,6 +97,7 @@
       .btn-primary {
         background-color: #ff6347;
         border: none;
+        font-family: "Georgia", serif; /* Refined font for buttons */
       }
 
       .btn-primary:hover {
@@ -101,21 +105,24 @@
       }
 
       .btn-danger {
-        background-color: #d9534f;
+        background-color: rgba(220, 211, 211, 0.85);
         border: none;
+        font-family: "Arial", sans-serif;
+        color: rgb(64, 57, 52);
       }
 
       .btn-danger:hover {
-        background-color: #c0392b;
+        background-color: rgb(227, 57, 27);
       }
 
       footer {
-        background-color: #343a40;
+        background-color: rgb(50, 48, 47);
         color: white;
         padding: 20px;
         text-align: center;
         border-radius: 5px;
         margin-top: 40px;
+        font-family: "Arial", sans-serif; /* Changed font */
       }
 
       footer a {
@@ -167,9 +174,64 @@
           transform: translateY(-10px);
         }
       }
+
+      /* Snowflake animation */
+      @keyframes snow {
+        0% {
+          transform: translateY(-100px);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+
+      .snowflake {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        font-size: 1.5rem;
+        color: white;
+        opacity: 0.7;
+        animation: snow 10s linear infinite;
+      }
+
+      .snowflake:nth-child(odd) {
+        animation-duration: 15s;
+      }
+
+      .snowflake:nth-child(even) {
+        animation-duration: 20s;
+      }
+
+      .snowflake:nth-child(3n) {
+        animation-duration: 25s;
+      }
+
+      /* Add more snowflakes for a heavier effect */
+      .snowflake:nth-child(4n) {
+        animation-duration: 30s;
+        font-size: 2rem;
+        left: 80%;
+      }
+
+      .snowflake:nth-child(5n) {
+        animation-duration: 35s;
+        font-size: 1.2rem;
+        left: 20%;
+      }
     </style>
   </head>
   <body>
+    <!-- Snowflakes for Christmas effect -->
+    <div class="snowflake" style="left: 10%; animation-delay: 0s">❄️</div>
+    <div class="snowflake" style="left: 20%; animation-delay: 2s">❄️</div>
+    <div class="snowflake" style="left: 30%; animation-delay: 4s">❄️</div>
+    <div class="snowflake" style="left: 40%; animation-delay: 6s">❄️</div>
+    <div class="snowflake" style="left: 50%; animation-delay: 8s">❄️</div>
+    <div class="snowflake" style="left: 60%; animation-delay: 10s">❄️</div>
+    <div class="snowflake" style="left: 70%; animation-delay: 12s">❄️</div>
+    <div class="snowflake" style="left: 80%; animation-delay: 14s">❄️</div>
+
     <!-- Header Section -->
     <div class="header">
       <h1>
@@ -190,18 +252,26 @@
     <div class="container">
       <!-- Dashboard Greeting -->
       <div class="dashboard-section">
-        <h3>
-          <i class="fas fa-snowflake icon"></i> Welcome, {{ user.username }}!
+        <h3 style="font-family: 'Lucida Handwriting', cursive">
+          <!-- Keep Welcome in cursive -->
+          <i class="fas fa-snowflake icon"></i> Welcome,
+          <span style="font-family: 'Arial', sans-serif"
+            >{{ user.username }}</span
+          >!
+          <!-- Non-cursive username -->
         </h3>
       </div>
 
       <!-- Message Section -->
       <div class="dashboard-section message-box">
-        <p>Start a conversation or send a wish to Santa!</p>
+        <h4><i class="fas fa-envelope icon"></i> Messages</h4>
+        <p style="font-family: 'Arial', sans-serif">
+          Start a conversation or send a wish to Santa!
+        </p>
+        <!-- Changed to non-cursive font -->
         <a href="{% url 'send_message' %}" class="btn btn-primary btn-sm mb-3"
           >Send a Letter to Santa/Friend</a
         >
-        <h4><i class="fas fa-envelope icon"></i> Message History</h4>
         <ul class="list-group">
           {% for user in users %}
           <li

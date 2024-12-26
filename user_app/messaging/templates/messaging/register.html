@@ -7,7 +7,6 @@
     <link rel="icon" href="{% static 'Image.png' %}" type="image/png" />
     <title>Santa's Delivery - Registration</title>
     <style>
-      /* General body styling */
       html,
       body {
         height: 100%;
@@ -18,7 +17,6 @@
         overflow: hidden;
       }
 
-      /* Snowflakes falling animation */
       @keyframes snowfall {
         0% {
           top: -10%;
@@ -33,16 +31,19 @@
       .snowflake {
         position: absolute;
         top: -10%;
-        left: 50%;
         font-size: 1.5em;
         color: #fff;
         z-index: 999;
         animation: snowfall 10s linear infinite;
-        animation-delay: calc(-10s * var(--i));
       }
 
+      /* Multiple snowflakes across the screen */
       .snowflake:nth-child(odd) {
         animation-duration: 12s;
+      }
+      .snowflake {
+        left: calc(var(--i) * 10%);
+        animation-delay: calc(-10s * var(--i));
       }
 
       /* Flex container for form and images */
@@ -68,9 +69,9 @@
       .login-box {
         width: 350px;
         padding: 30px;
-        background: #ffcccb;
+        background: rgba(252, 245, 244, 0.57);
         box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
-        border-radius: 15px;
+        border-radius: 20px;
         text-align: center;
         position: relative;
       }
@@ -81,6 +82,7 @@
         content: "";
         position: absolute;
         background: #d62828;
+        border-radius: 10px;
         z-index: 0;
       }
 
@@ -107,10 +109,19 @@
         left: 50%;
         width: 70px;
         height: 70px;
-        background: #d62828;
+        background: rgb(23, 100, 23);
         transform: translateX(-50%);
         clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        z-index: 1;
+        animation: rotateBow 2s infinite linear;
+      }
+
+      @keyframes rotateBow {
+        0% {
+          transform: translateX(-50%) rotate(0deg);
+        }
+        100% {
+          transform: translateX(-50%) rotate(360deg);
+        }
       }
 
       .gift-bow::before,
@@ -119,7 +130,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background: #d62828;
+        background: rgb(23, 100, 23);
         clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
       }
 
@@ -131,17 +142,36 @@
         transform: rotate(-45deg);
       }
 
-      /* Title */
+      /* Title with animation and spacing */
       .support-title {
-        font-size: 2em;
-        color: #d62828;
+        font-family: "Georgia", serif;
         font-weight: bold;
-        margin-bottom: 20px;
+        font-size: 2rem;
+        color: #fff;
+        margin: 20px 0 10px; /* Added top margin for spacing */
         text-transform: uppercase;
-        z-index: 1;
+        animation: titleAnim 2s infinite alternate ease-in-out;
       }
 
-      /* Form fields */
+      @keyframes titleAnim {
+        0% {
+          transform: scale(1);
+          color: rgb(208, 169, 40);
+        }
+        100% {
+          transform: scale(1.1);
+          color: #d62828;
+        }
+      }
+
+      h2 {
+        font-family: "Verdana", sans-serif;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #4d9f4d;
+        margin-bottom: 20px;
+      }
+
       .user-box {
         position: relative;
         margin-bottom: 20px;
@@ -179,12 +209,11 @@
         font-size: 12px;
       }
 
-      /* Submit button */
       .login-button {
-        position: relative;
         display: inline-block;
         padding: 10px 25px;
         font-size: 14px;
+        font-weight: bold; /* Bold text */
         color: #fff;
         background: #d62828;
         border: none;
@@ -200,7 +229,6 @@
         color: #d62828;
       }
 
-      /* Footer styling */
       footer {
         position: absolute;
         bottom: 20px;
@@ -214,20 +242,14 @@
 
   <body>
     <!-- Snowflakes -->
-    <div class="snowflake" style="--i: 1">❄️</div>
-    <div class="snowflake" style="--i: 2">❄️</div>
-    <div class="snowflake" style="--i: 3">❄️</div>
-    <div class="snowflake" style="--i: 4">❄️</div>
-    <div class="snowflake" style="--i: 5">❄️</div>
-    <div class="snowflake" style="--i: 6">❄️</div>
+    {% for i in snowflake_range %}
+    <div class="snowflake" style="--i: {{ i }}">❄️</div>
+    {% endfor %}
 
-    <!-- Container for form and images -->
     <div class="container">
       <div class="image-container">
         <img src="{% static 'gift.png' %}" alt="Gift" />
       </div>
-
-      <!-- Registration Box -->
       <div class="login-box">
         <div class="gift-bow"></div>
         <div class="support-title">Santa's Letter Delivery</div>
@@ -253,7 +275,6 @@
           <button type="submit" class="login-button">Register</button>
         </form>
       </div>
-
       <div class="image-container">
         <img src="{% static 'santa.png' %}" alt="Santa" />
       </div>
