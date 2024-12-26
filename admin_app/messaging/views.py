@@ -30,16 +30,6 @@ def view_user_messages(request, user_id):
 def home(request):
     return render(request, 'messaging/home.html') 
 
-def edit_user(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    if request.method == 'POST':
-        user.username = request.POST.get('username')
-        user.email = request.POST.get('email')
-        user.save()
-        return redirect('admin_dashboard')
-    return render(request, 'admin_app/edit_user.html', {'user': user})
-
-
 def delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
     user.delete()
